@@ -44,8 +44,7 @@
       color: var(--ink-soft);
     }
 
-    /* ============= THEMES (two palettes) ============= */
-    /* Note: theme is controlled on BODY via data-theme */
+    /* ============= THEMES ============= */
 
     body[data-theme="light"] {
       --page-bg: #FCFCFA;
@@ -127,7 +126,7 @@
       box-shadow: inset 0 0 0 999px rgba(255,255,255,0.04);
     }
 
-    /* ============= BUTTONS with borders & shade ============= */
+    /* ============= BUTTONS ============= */
 
     .btn {
       display: inline-flex;
@@ -161,10 +160,7 @@
       text-decoration: none;
     }
 
-    /* Hover: white things darker, black things lighter */
-
     body[data-theme="light"] .btn-solid:hover {
-      /* black button → subtle light sheen */
       box-shadow:
         0 0 0 1px rgba(255,255,255,0.7),
         0 10px 22px rgba(0,0,0,0.24);
@@ -172,7 +168,6 @@
     }
 
     body[data-theme="dark"] .btn-solid:hover {
-      /* white button → subtle dark shading */
       background: #F0F0EC;
       box-shadow:
         0 0 0 1px rgba(0,0,0,0.35),
@@ -181,18 +176,16 @@
     }
 
     body[data-theme="light"] .btn-outline:hover {
-      /* white bg → darker shade */
       background: #F1F1EE;
       box-shadow: inset 0 0 0 999px rgba(0,0,0,0.03);
     }
 
     body[data-theme="dark"] .btn-outline:hover {
-      /* black bg → lighter wash */
       background: #111111;
       box-shadow: inset 0 0 0 999px rgba(255,255,255,0.04);
     }
 
-    /* ============= SEED LAB LAYOUT ============= */
+    /* ============= LAYOUT ============= */
 
     .layout {
       display: grid;
@@ -238,6 +231,58 @@
       margin-top: 0.4rem;
     }
 
+    /* ============= SEARCH + FEATURED ============= */
+
+    .search-bar {
+      width: 100%;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-ink);
+      background: var(--surface-bg);
+      color: var(--ink-main);
+      font-size: 0.85rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .search-bar::placeholder {
+      color: var(--ink-muted);
+    }
+
+    .search-bar:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+    }
+
+    .featured-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .featured-row .seed-card {
+      box-shadow: 0 18px 34px rgba(0,0,0,0.16);
+    }
+
+    .seed-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.1rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-ink);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-main);
+    }
+
+    .seed-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
     /* ============= FILTERS ============= */
 
     .filters {
@@ -257,6 +302,7 @@
       background: transparent;
       cursor: pointer;
       transition: background 0.18s ease, box-shadow 0.18s ease;
+      color: var(--ink-main);
     }
 
     .filter-btn.active {
@@ -277,25 +323,47 @@
 
     .seed-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1rem;
     }
 
     .seed-card {
-      border-radius: 14px;
+      border-radius: 18px;
       border: 1px solid var(--border-ink);
       background: var(--surface-bg);
-      padding: 0.9rem 0.95rem 0.95rem;
+      padding: 1rem 1.1rem 0.95rem;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
     }
 
+    .seed-card-main {
+      /* for JS targeting */
+    }
+
+    .seed-card-featured {
+      /* for JS targeting */
+    }
+
+    .seed-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .seed-footer {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
     .seed-header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 0.4rem;
+      align-items: flex-start;
+      gap: 0.8rem;
     }
 
     .seed-title {
@@ -314,6 +382,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      white-space: nowrap;
     }
 
     .seed-desc {
@@ -336,8 +405,13 @@
       color: var(--ink-muted);
     }
 
+    /* better contrast in dark mode for tags */
+    body[data-theme="dark"] .seed-tag {
+      color: var(--ink-soft);
+      border-color: var(--ink-soft);
+    }
+
     .seed-actions {
-      margin-top: 0.45rem;
       display: flex;
       flex-wrap: wrap;
       gap: 0.45rem;
@@ -346,17 +420,25 @@
     .meta-line {
       font-size: 0.75rem;
       color: var(--ink-muted);
-      margin-top: 0.25rem;
     }
 
-    footer {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      color: var(--ink-muted);
+    /* ============= FOOTER ============= */
+
+    .site-footer {
       display: flex;
       justify-content: space-between;
-      gap: 0.6rem;
+      align-items: center;
       flex-wrap: wrap;
+      margin-top: 3rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--border-ink);
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .footer-right {
+      text-align: right;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
@@ -411,6 +493,18 @@
       <section class="panel">
         <div class="panel-title">Seed Catalog</div>
 
+        <!-- Search -->
+        <input
+          type="text"
+          id="search-input"
+          class="search-bar"
+          placeholder="Search by name, tag, or vibe..."
+        />
+
+        <!-- Featured row -->
+        <div id="featured-row" class="featured-row"></div>
+
+        <!-- Filters -->
         <div class="filters">
           <button class="filter-btn active" data-filter="all" type="button">All</button>
           <button class="filter-btn" data-filter="free" type="button">Free</button>
@@ -419,13 +513,20 @@
           <button class="filter-btn" data-filter="weird" type="button">Weird toys</button>
         </div>
 
+        <!-- Main catalog -->
         <div class="seed-list" id="seed-list"></div>
       </section>
     </main>
 
-    <footer>
-      <div>Seed Lab · © 2025 Luke Rigney</div>
-      <div>All tools are HTML-first, local-first, and meant to be remixed.</div>
+    <footer class="site-footer">
+      <div class="footer-left">
+        Seed Engineer Lab · © 2025 Luke Rigney · 
+        <a href="terms.html" style="text-decoration:none; color:inherit;">Terms</a> · 
+        <a href="privacy.html" style="text-decoration:none; color:inherit;">Privacy</a>
+      </div>
+      <div class="footer-right">
+        All tools are HTML-first, local-first, and meant to be remixed.
+      </div>
     </footer>
   </div>
 
@@ -433,28 +534,55 @@
   <script>
     const seedListEl = document.getElementById("seed-list");
     const filterButtons = document.querySelectorAll(".filter-btn");
+    const featuredRowEl = document.getElementById("featured-row");
+    const searchInput = document.getElementById("search-input");
 
-    function renderSeeds() {
-      if (!Array.isArray(seeds)) return;
-      seedListEl.innerHTML = "";
-      seeds.forEach((seed) => {
-        const card = document.createElement("article");
-        card.className = "seed-card";
-        card.dataset.category = (seed.categories || []).join(" ");
+    let currentFilter = "all";
 
-        const tagsHtml = (seed.tags || [])
-          .map((tag) => `<span class="seed-tag">${tag}</span>`)
-          .join("");
+    function buildCard(seed, options = {}) {
+      const { includeMeta = true, includeSecondary = true, variant = "main" } = options;
+      const card = document.createElement("article");
 
-        const secondaryButton = seed.secondaryCtaLabel
-          ? `<a href="${seed.secondaryCtaUrl || '#'}" class="btn btn-outline">
+      // classnames so we can target only main cards for filtering/search
+      const classes = ["seed-card"];
+      if (variant === "main") classes.push("seed-card-main");
+      if (variant === "featured") classes.push("seed-card-featured");
+      card.className = classes.join(" ");
+
+      card.dataset.category = (seed.categories || []).join(" ");
+
+      const tagsHtml = (seed.tags || [])
+        .map((tag) => `<span class="seed-tag">${tag}</span>`)
+        .join("");
+
+      const badge = seed.featured && variant === "featured"
+        ? `<span class="seed-badge">${seed.badgeLabel || "FEATURED"}</span>`
+        : "";
+
+      const secondaryButton =
+        includeSecondary && seed.secondaryCtaLabel
+          ? `<a href="${seed.secondaryCtaUrl || "#"}" class="btn btn-outline">
                ${seed.secondaryCtaLabel}
              </a>`
           : "";
 
-        card.innerHTML = `
+      const metaLine = includeMeta
+        ? `<div class="meta-line">
+             ${
+               seed.priceType === "free"
+                 ? "Free seed · local-first · remix encouraged"
+                 : "Local-first HTML · yours to archive and fork"
+             }
+           </div>`
+        : "";
+
+      card.innerHTML = `
+        <div class="seed-main">
           <div class="seed-header">
-            <div class="seed-title">${seed.title || ""}</div>
+            <div class="seed-title-wrap">
+              ${badge}
+              <div class="seed-title">${seed.title || ""}</div>
+            </div>
             <div class="seed-price">${seed.priceLabel || ""}</div>
           </div>
           <p class="seed-desc">
@@ -463,40 +591,63 @@
           <div class="seed-tags">
             ${tagsHtml}
           </div>
+        </div>
+        <div class="seed-footer">
           <div class="seed-actions">
-            <a href="${seed.primaryCtaUrl || '#'}" class="btn btn-solid" target="_blank" rel="noopener">
+            <a href="${seed.primaryCtaUrl || "#"}" class="btn btn-solid" target="_blank" rel="noopener">
               ${seed.primaryCtaLabel || "Buy"}
             </a>
             ${secondaryButton}
           </div>
-          <div class="meta-line">
-            ${
-              seed.priceType === "free"
-                ? "Free seed · local-first · remix encouraged"
-                : "Local-first HTML · yours to archive and fork"
-            }
-          </div>
-        `;
+          ${metaLine}
+        </div>
+      `;
 
+      return card;
+    }
+
+    function renderSeeds() {
+      if (!Array.isArray(seeds)) return;
+      seedListEl.innerHTML = "";
+      seeds.forEach((seed) => {
+        const card = buildCard(seed, { includeMeta: true, includeSecondary: true, variant: "main" });
         seedListEl.appendChild(card);
       });
     }
 
-    function applyFilter(filter) {
-      const cards = document.querySelectorAll(".seed-card");
+    function renderFeatured() {
+      if (!Array.isArray(seeds)) return;
+      featuredRowEl.innerHTML = "";
+      const featuredSeeds = seeds.filter((s) => s.featured);
+      if (!featuredSeeds.length) return;
+
+      featuredSeeds.forEach((seed) => {
+        const card = buildCard(seed, { includeMeta: false, includeSecondary: true, variant: "featured" });
+        featuredRowEl.appendChild(card);
+      });
+    }
+
+    function applyFilterAndSearch() {
+      // only main cards are filtered/searched; featured stay pinned
+      const cards = document.querySelectorAll(".seed-card-main");
+      const query = (searchInput.value || "").toLowerCase();
+
       cards.forEach((card) => {
         const categories = (card.dataset.category || "").split(" ");
         const isFree = categories.includes("free");
         const isPaid = categories.includes("paid");
+        let matchesFilter = true;
 
-        let show = true;
-        if (filter === "free") show = isFree;
-        else if (filter === "paid") show = isPaid;
-        else if (filter === "writing") show = categories.includes("writing");
-        else if (filter === "weird") show = categories.includes("weird");
-        else show = true;
+        if (currentFilter === "free") matchesFilter = isFree;
+        else if (currentFilter === "paid") matchesFilter = isPaid;
+        else if (currentFilter === "writing") matchesFilter = categories.includes("writing");
+        else if (currentFilter === "weird") matchesFilter = categories.includes("weird");
+        else matchesFilter = true;
 
-        card.style.display = show ? "flex" : "none";
+        const text = card.innerText.toLowerCase();
+        const matchesSearch = !query || text.includes(query);
+
+        card.style.display = matchesFilter && matchesSearch ? "flex" : "none";
       });
     }
 
@@ -512,15 +663,19 @@
 
     // init
     renderSeeds();
+    renderFeatured();
+    applyFilterAndSearch();
 
     filterButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const filter = btn.dataset.filter;
+        currentFilter = btn.dataset.filter;
         filterButtons.forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
-        applyFilter(filter);
+        applyFilterAndSearch();
       });
     });
+
+    searchInput.addEventListener("input", applyFilterAndSearch);
   </script>
 </body>
 </html>
