@@ -40,7 +40,7 @@ const seeds = [
       "Skeleton of a private EPUB library: shelf, simple metadata, and placeholder slots for your future features.",
     tags: ["library", "epub", "starter"],
     primaryCtaLabel: "Download .zip",
-    primaryCtaUrl: "/downloads/1b3c_libraryos_2025.zip",
+    primaryCtaUrl: "/thanks/1b3c_libraryos_2025.zip",
     secondaryCtaLabel: "View source",
     secondaryCtaUrl: "#",
   },
