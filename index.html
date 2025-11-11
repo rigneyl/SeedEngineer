@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nerdy Geeky Cool · Seed Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ============= RESET + BASE ============= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .page {
+      max-width: 1120px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      max-width: 620px;
+      font-size: 0.96rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    p {
+      color: var(--ink-soft);
+    }
+
+    /* ============= THEMES (two palettes) ============= */
+    /* Note: theme is controlled on BODY via data-theme */
+
+    body[data-theme="light"] {
+      --page-bg: #FCFCFA;
+      --surface-bg: #FFFFFF;
+      --ink-main: #111111;
+      --ink-soft: #333333;
+      --ink-muted: #666666;
+      --border-ink: #111111;
+
+      --btn-solid-bg: #111111;
+      --btn-solid-text: #FFFFFF;
+      --btn-outline-bg: #FFFFFF;
+      --btn-outline-text: #111111;
+
+      --shadow-card: 0 18px 38px rgba(0,0,0,0.12);
+      --shadow-btn: 0 8px 16px rgba(0,0,0,0.18);
+    }
+
+    body[data-theme="dark"] {
+      --page-bg: #050505;
+      --surface-bg: #0D0D0D;
+      --ink-main: #FDFDFB;
+      --ink-soft: #E7E7E5;
+      --ink-muted: #AAAAAA;
+      --border-ink: #FDFDFB;
+
+      --btn-solid-bg: #FDFDFB;
+      --btn-solid-text: #050505;
+      --btn-outline-bg: #050505;
+      --btn-outline-text: #FDFDFB;
+
+      --shadow-card: 0 18px 38px rgba(0,0,0,0.7);
+      --shadow-btn: 0 10px 24px rgba(0,0,0,0.75);
+    }
+
+    body[data-theme="light"],
+    body[data-theme="dark"] {
+      background: var(--page-bg);
+      color: var(--ink-main);
+    }
+
+    /* ============= TOP BAR / TOGGLE ============= */
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.75rem;
+      gap: 1rem;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-ink);
+      background: transparent;
+      color: var(--ink-main);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .theme-toggle span.mode-label {
+      opacity: 0.7;
+    }
+
+    body[data-theme="light"] .theme-toggle:hover {
+      background: #F1F1EE;
+      box-shadow: inset 0 0 0 999px rgba(0,0,0,0.03);
+    }
+
+    body[data-theme="dark"] .theme-toggle:hover {
+      background: #111111;
+      box-shadow: inset 0 0 0 999px rgba(255,255,255,0.04);
+    }
+
+    /* ============= BUTTONS with borders & shade ============= */
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.5rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--border-ink);
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease;
+    }
+
+    .btn-solid {
+      background: var(--btn-solid-bg);
+      color: var(--btn-solid-text);
+      box-shadow: var(--shadow-btn);
+      text-decoration: none;
+    }
+
+    .btn-outline {
+      background: var(--btn-outline-bg);
+      color: var(--btn-outline-text);
+      text-decoration: none;
+    }
+
+    /* Hover: white things darker, black things lighter */
+
+    body[data-theme="light"] .btn-solid:hover {
+      /* black button → subtle light sheen */
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.7),
+        0 10px 22px rgba(0,0,0,0.24);
+      transform: translateY(-1px);
+    }
+
+    body[data-theme="dark"] .btn-solid:hover {
+      /* white button → subtle dark shading */
+      background: #F0F0EC;
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.35),
+        0 10px 24px rgba(0,0,0,0.85);
+      transform: translateY(-1px);
+    }
+
+    body[data-theme="light"] .btn-outline:hover {
+      /* white bg → darker shade */
+      background: #F1F1EE;
+      box-shadow: inset 0 0 0 999px rgba(0,0,0,0.03);
+    }
+
+    body[data-theme="dark"] .btn-outline:hover {
+      /* black bg → lighter wash */
+      background: #111111;
+      box-shadow: inset 0 0 0 999px rgba(255,255,255,0.04);
+    }
+
+    /* ============= SEED LAB LAYOUT ============= */
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 2.2fr);
+      gap: 1.8rem;
+    }
+
+    @media (max-width: 840px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      border-radius: 18px;
+      border: 1px solid var(--border-ink);
+      background: var(--surface-bg);
+      box-shadow: var(--shadow-card);
+      padding: 1.5rem 1.6rem 1.6rem;
+    }
+
+    .panel-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--ink-muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: 0.85rem;
+    }
+
+    .about-text strong {
+      color: var(--ink-main);
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* ============= FILTERS ============= */
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .filter-btn {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-ink);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .filter-btn.active {
+      font-weight: 600;
+    }
+
+    body[data-theme="light"] .filter-btn:hover {
+      background: #F1F1EE;
+      box-shadow: inset 0 0 0 999px rgba(0,0,0,0.02);
+    }
+
+    body[data-theme="dark"] .filter-btn:hover {
+      background: #111111;
+      box-shadow: inset 0 0 0 999px rgba(255,255,255,0.03);
+    }
+
+    /* ============= SEED CARDS ============= */
+
+    .seed-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .seed-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-ink);
+      background: var(--surface-bg);
+      padding: 0.9rem 0.95rem 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .seed-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .seed-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .seed-price {
+      font-size: 0.78rem;
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      border: 1px solid var(--border-ink);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .seed-desc {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .seed-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.15rem;
+    }
+
+    .seed-tag {
+      font-size: 0.72rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      border: 1px dashed var(--border-ink);
+      color: var(--ink-muted);
+    }
+
+    .seed-actions {
+      margin-top: 0.45rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .meta-line {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-top: 0.25rem;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <div class="page">
+    <div class="top-row">
+      <div>
+        <h1>Nerdy Geeky Cool · Seed Lab</h1>
+        <p class="subtitle">
+          We don’t build websites. We build things the internet didn’t have yesterday.
+          Tiny HTML experiments, local-first tools, and janky little seeds for writers,
+          tinkerers, and other strange humans.
+        </p>
+      </div>
+      <button class="theme-toggle" type="button" onclick="toggleTheme()">
+        <span class="mode-label">Theme</span>
+        <span id="mode-indicator">Light → Dark</span>
+      </button>
+    </div>
+
+    <main class="layout">
+      <!-- Left: About / Philosophy -->
+      <section class="panel">
+        <div class="panel-title">About the Lab</div>
+        <p class="about-text">
+          This is a micro-storefront for <strong>seeds</strong> — small, self-contained HTML tools
+          that run entirely in your browser. No logins, no tracking, no cloud. Download once,
+          keep forever, mutate freely.
+        </p>
+        <p class="about-text">
+          Each seed does <strong>one thing well</strong>: capture snippets, analyze tone, explore ideas,
+          play with structure, or just make your writing life a little weirder.
+        </p>
+        <p class="about-text">
+          You’re encouraged to <strong>view the source, fork it, and grow your own version</strong>.
+          Think of these as starter organisms for your own experiments — janky on purpose, but alive.
+        </p>
+
+        <div class="panel-title" style="margin-top:1.2rem;">How it works</div>
+        <p class="about-text">
+          Pick a seed that looks interesting, grab the <code>.zip</code>, and double-click
+          <code>index.html</code>. That’s it. If you want more, open it in a text editor and
+          start tearing it apart.
+        </p>
+        <p class="note">
+          All seeds are deliberately small enough to understand in a single sitting.
+          If you like the vibe, collect a few or watch for new drops.
+        </p>
+      </section>
+
+      <!-- Right: Seed Catalog -->
+      <section class="panel">
+        <div class="panel-title">Seed Catalog</div>
+
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all" type="button">All</button>
+          <button class="filter-btn" data-filter="free" type="button">Free</button>
+          <button class="filter-btn" data-filter="paid" type="button">Paid</button>
+          <button class="filter-btn" data-filter="writing" type="button">Writing tools</button>
+          <button class="filter-btn" data-filter="weird" type="button">Weird toys</button>
+        </div>
+
+        <div class="seed-list" id="seed-list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div>Seed Lab · © 2025 Luke Rigney</div>
+      <div>All tools are HTML-first, local-first, and meant to be remixed.</div>
+    </footer>
+  </div>
+
+  <script src="seeds.js"></script>
+  <script>
+    const seedListEl = document.getElementById("seed-list");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+
+    function renderSeeds() {
+      if (!Array.isArray(seeds)) return;
+      seedListEl.innerHTML = "";
+      seeds.forEach((seed) => {
+        const card = document.createElement("article");
+        card.className = "seed-card";
+        card.dataset.category = (seed.categories || []).join(" ");
+
+        const tagsHtml = (seed.tags || [])
+          .map((tag) => `<span class="seed-tag">${tag}</span>`)
+          .join("");
+
+        const secondaryButton = seed.secondaryCtaLabel
+          ? `<a href="${seed.secondaryCtaUrl || '#'}" class="btn btn-outline">
+               ${seed.secondaryCtaLabel}
+             </a>`
+          : "";
+
+        card.innerHTML = `
+          <div class="seed-header">
+            <div class="seed-title">${seed.title || ""}</div>
+            <div class="seed-price">${seed.priceLabel || ""}</div>
+          </div>
+          <p class="seed-desc">
+            ${seed.description || ""}
+          </p>
+          <div class="seed-tags">
+            ${tagsHtml}
+          </div>
+          <div class="seed-actions">
+            <a href="${seed.primaryCtaUrl || '#'}" class="btn btn-solid" target="_blank" rel="noopener">
+              ${seed.primaryCtaLabel || "Buy"}
+            </a>
+            ${secondaryButton}
+          </div>
+          <div class="meta-line">
+            ${
+              seed.priceType === "free"
+                ? "Free seed · local-first · remix encouraged"
+                : "Local-first HTML · yours to archive and fork"
+            }
+          </div>
+        `;
+
+        seedListEl.appendChild(card);
+      });
+    }
+
+    function applyFilter(filter) {
+      const cards = document.querySelectorAll(".seed-card");
+      cards.forEach((card) => {
+        const categories = (card.dataset.category || "").split(" ");
+        const isFree = categories.includes("free");
+        const isPaid = categories.includes("paid");
+
+        let show = true;
+        if (filter === "free") show = isFree;
+        else if (filter === "paid") show = isPaid;
+        else if (filter === "writing") show = categories.includes("writing");
+        else if (filter === "weird") show = categories.includes("weird");
+        else show = true;
+
+        card.style.display = show ? "flex" : "none";
+      });
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute("data-theme") || "light";
+      const next = current === "light" ? "dark" : "light";
+      body.setAttribute("data-theme", next);
+
+      const indicator = document.getElementById("mode-indicator");
+      indicator.textContent = next === "light" ? "Light → Dark" : "Dark → Light";
+    }
+
+    // init
+    renderSeeds();
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.dataset.filter;
+        filterButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        applyFilter(filter);
+      });
+    });
+  </script>
+</body>
+</html>
